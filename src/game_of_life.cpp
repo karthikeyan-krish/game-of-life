@@ -15,6 +15,42 @@ struct Bounds
     int right;
 };
 
+struct CellPosition
+{
+    int row;
+    int col;
+};
+
+int countNeighbors(const Grid& grid, CellPosition position)
+{
+    if (grid.empty() || grid[0].empty())
+    {
+        return 0;
+    }
+
+    const int rows = static_cast<int>(grid.size());
+    const int cols = static_cast<int>(grid[0].size());
+    int count = 0;
+    for (int dr = -1; dr <= 1; ++dr)
+    {
+        for (int dc = -1; dc <= 1; ++dc)
+        {
+            if (dr == 0 && dc == 0)
+            {
+                continue;
+            }
+            const int neighborRow = position.row + dr;
+            const int neighborCol = position.col + dc;
+            if (neighborRow >= 0 && neighborRow < rows && neighborCol >= 0 && neighborCol < cols &&
+                grid[neighborRow][neighborCol])
+            {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
 Grid expandGrid(const Grid& grid)
 {
     const int rows = static_cast<int>(grid.size());
@@ -170,36 +206,6 @@ void writeGrid(const Grid& grid, const std::string& path)
     }
 }
 
-int countNeighbors(const Grid& grid, CellPosition position)
-{
-    if (grid.empty() || grid[0].empty())
-    {
-        return 0;
-    }
-
-    const int rows = static_cast<int>(grid.size());
-    const int cols = static_cast<int>(grid[0].size());
-    int count = 0;
-    for (int dr = -1; dr <= 1; ++dr)
-    {
-        for (int dc = -1; dc <= 1; ++dc)
-        {
-            if (dr == 0 && dc == 0)
-            {
-                continue;
-            }
-            const int neighborRow = position.row + dr;
-            const int neighborCol = position.col + dc;
-            if (neighborRow >= 0 && neighborRow < rows && neighborCol >= 0 && neighborCol < cols &&
-                grid[neighborRow][neighborCol])
-            {
-                ++count;
-            }
-        }
-    }
-    return count;
-}
-
 Grid step(const Grid& grid)
 {
     if (grid.empty())
@@ -207,8 +213,8 @@ Grid step(const Grid& grid)
         return grid;
     }
 
-    // Add one dead border so cells can be born just outside the current edges
-    // After applying the rules, keep only the smallest area containing live cells
+    // Add one dead border so cells can be born just outside the current edges.
+    // After applying the rules, keep only the smallest area containing live cells.
     const Grid expanded = expandGrid(grid);
     const Grid next = applyRules(expanded);
     const std::optional<Bounds> bounds = findLiveBounds(next);

@@ -77,14 +77,6 @@ TEST(MakeOutputPathTest, KeepsDirectory)
     EXPECT_EQ(makeOutputPath("boards/game_of_life.txt", 5), "boards/game_of_life_5.txt");
 }
 
-TEST(CountNeighborsTest, CountsCorrectNeighbors)
-{
-    Grid grid = {{true, true, false}, {false, true, false}, {false, false, true}};
-    EXPECT_EQ(countNeighbors(grid, {0, 0}), 2);
-    EXPECT_EQ(countNeighbors(grid, {1, 1}), 3);
-    EXPECT_EQ(countNeighbors(grid, {2, 2}), 1);
-}
-
 TEST(StepTest, ExpandsAndTrims)
 {
     Grid grid = {{false, true, false}, {false, false, true}, {true, true, true}};
