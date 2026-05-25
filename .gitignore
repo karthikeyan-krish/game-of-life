@@ -1,0 +1,14 @@
+# Build and CMake files
+/build/
+/.cache/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+
+# OS / editor files
+*.swp
+*.swo
+*.user
+*.user.*
+*.log
+.DS_Store
