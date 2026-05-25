@@ -1,0 +1,7 @@
+Checks: '-*,clang-analyzer-*,bugprone-*,modernize-use-nullptr,modernize-use-override,modernize-loop-convert,performance-*,readability-*'
+WarningsAsErrors: ''
+HeaderFilterRegex: 'src/.*|tests/.*'
+FormatStyle: none
+CheckOptions:
+  - key: readability-identifier-length.IgnoredLoopCounterNames
+    value: '^[ijkrc]$'
